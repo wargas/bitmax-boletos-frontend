@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#sidebar {
+    @apply absolute w-sidebar top-0 bottom-0 left-0 border-r bg-white;
+}
+
+
+#sidebar .main-menu { 
+    @apply  flex flex-col mt-4;
+}
+
+#sidebar .main-menu li {
+    /* @apply bg-red-500 */
+}
+
+#sidebar .main-menu li a {
+    @apply flex py-3 items-center rounded gap-4 px-4 mx-2 my-1 hover:bg-primary-100; 
+}
+
+#sidebar .main-menu li a.active {
+    @apply bg-primary-500  text-white;
+}
+
+
+.button {
+    @apply uppercase px-4 py-2 rounded  font-bold border flex items-center justify-center gap-2
+}
+
+.button.primary {
+    @apply bg-primary-600 border-primary-600 hover:bg-primary-700 text-white
+}
+
+.button.secondary {
+    @apply border-primary-600 hover:border-primary-700 text-primary-600
+}
+
+[type="text"]:focus, [type="email"]:focus, [type="url"]:focus, [type="password"]:focus, [type="number"]:focus, [type="date"]:focus, [type="datetime-local"]:focus, [type="month"]:focus, [type="search"]:focus, [type="tel"]:focus, [type="time"]:focus, [type="week"]:focus, [multiple]:focus, textarea:focus, select:focus {
+    --tw-ring-color: theme('colors.gray.300');
+    @apply border-gray-300
+}
+
+[type="text"], [type="email"], [type="url"], [type="password"], [type="number"], [type="date"], [type="datetime-local"], [type="month"], [type="search"], [type="tel"], [type="time"], [type="week"], [multiple], textarea, select {
+    @apply border-gray-300
+}
+
+.table {
+    @apply w-full drop-shadow divide-y
+}
+
+.table>thead>tr {
+    @apply uppercase h-12
+}
+
+.table>thead>tr>th {
+    @apply text-left px-4 bg-gray-50 text-gray-600 h-12 first:rounded-tl last:rounded-tr
+}
+
+.table>tbody>tr>td {
+    @apply py-2;
+}
+
+.table>tbody>tr:last-child>td:first-child {
+    @apply rounded-bl
+}
+
+.table>tbody>tr:last-child>td:last-child {
+    @apply rounded-br
+}
+
+.table>tbody>tr:nth-child(odd)>td {
+    @apply bg-[#eeeeee]
+}
+
+.table>tbody>tr>td {
+    @apply px-4 cursor-pointer bg-white text-gray-700;
+}

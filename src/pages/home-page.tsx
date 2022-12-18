@@ -1,12 +1,14 @@
 import { useNavigate } from 'react-router-dom'
+import { useCloseModal } from '../components/modals'
 import PageComponent from '../components/page'
+import useModalStore from '../stores/modal-store'
 
 export default function HomePage() {
-  const navigate = useNavigate()
-
+  
   return (
     <PageComponent>
-      <button className='border'>Ação</button>
+      
     </PageComponent>
   )
 }
+

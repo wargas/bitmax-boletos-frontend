@@ -12,6 +12,7 @@ import RemessasPage from './pages/remessas-page';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 import 'react-toastify/dist/ReactToastify.css';
+import Modals from './components/modals';
 
 function App() {
 
@@ -22,8 +23,6 @@ function App() {
       }
     }
   });
-
-  console.log(queryClient)
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -38,6 +37,7 @@ function App() {
               <Route path='clientes' element={<ClientesPage />} />
             </Route>
           </Routes>
+          <Modals />
         </BrowserRouter>
       <ToastContainer />
       <ReactQueryDevtools />

@@ -61,18 +61,18 @@ export default function BoletosPage() {
             onChange={(ev) => setSearch(ev.target.value)}
             placeholder="Documento"
             type="text"
-            className="rounded"
+            className="input"
           />
-          <button onClick={() => refetch()} className="button primary">
+          <button onClick={() => refetch()} className="btn btn-primary">
             {isFetching ? (
               <Loading type="spin" width={15} height={15} color="white" />
             ) : (
               <MagnifyingGlass />
             )}
-            Buscar
+             <span className='ml-3'>Buscar</span>
           </button>
           {selecionados?.length > 0 && (
-            <button onClick={handlerCarne} className="button primary">
+            <button onClick={handlerCarne} className="btn btn-primary">
               Gerar Carnê ({selecionados.length})
             </button>
           )}

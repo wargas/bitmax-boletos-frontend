@@ -17,13 +17,13 @@ export default function ClientesPage() {
     <PageComponent>
       <PageTitle title="Clientes">
         <div className="flex gap-2">
-          <button onClick={() => refetch()} className="button border-none">
+          <button onClick={() => refetch()} className="btn btn-square btn-ghost">
             {isRefetching ? <Loading color='black' type='spin' width={15} height={15} /> : <ArrowsClockwise /> }
           </button>
-          <button className="button border-none">
+          <button className="btn btn-square btn-ghost">
             <Plus />
           </button>
-          <input type="text" className="rounded" placeholder="Pequisar" />
+          <input type="text" className="input" placeholder="Pequisar" />
         </div>
       </PageTitle>
 

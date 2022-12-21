@@ -6,8 +6,12 @@ import Loading from 'react-loading'
 import { toast } from 'react-toastify'
 import { Remessa } from '../interfaces/api-interfaces'
 import PageComponent from '../components/page'
+import { ChangeEvent, useRef } from 'react'
 
 export default function RemessasPage() {
+
+  const fileRef = useRef<HTMLInputElement>(null);
+
   const mutation = useMutation(async () => {
     try {
       const { data } = await Api.post(`remessas`, {})
@@ -30,36 +34,51 @@ export default function RemessasPage() {
     })
 
     const url = window.URL.createObjectURL(new Blob([data]))
-
     const link = document.createElement('a')
-
     link.href = url
-
     link.setAttribute('download', `remessa-${id}.txt`)
-
     document.body.appendChild(link)
-
     link.click()
-
     link.remove()
   }
+
+  async function handlerRetornoChange(event: ChangeEvent<HTMLInputElement>) {
+    const [file] = event.target.files || [];
+
+    const formData = new FormData();
+
+    formData.append('file', file);
+
+    try {
+      const { data} = await Api.post('remessas/retorno', formData);
+
+      toast.success("Arquivo de retorno importado!");
+    } catch (error) {
+      
+    }
+
+  } 
 
   return (
     <PageComponent>
       <PageTitle title="Remessas">
         <div className="flex items-center">
           {mutation.isLoading || isRefetching  && (
-            <Loading type="spin" width={15} height={15} color="black" />
+            <button className='btn loading btn-square btn-ghost'></button>
           )}
           <button
             onClick={() => mutation.mutate()}
-            className="button border-none h-10 flex items-center justify-center"
+            className="btn btn-ghost"
           >
             <span>Gerar Remessa</span>
+          </button>
+          <button onClick={() => fileRef.current?.click()} className='btn btn-ghost'>
+            Enviar Retorno
           </button>
         </div>
       </PageTitle>
       <div>
+        <input onChange={handlerRetornoChange} className='hidden' ref={fileRef} type="file"  />
         <table className="table">
           <thead>
             <tr>

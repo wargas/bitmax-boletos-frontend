@@ -31,17 +31,18 @@ export default function AdminPage() {
     }
   }, [token])
 
-  if(loading) return (
-    <div className='absolute inset-0 flex items-center justify-center'>
-      <Loading type='bars' width={40} height={40} color="green" />
-    </div>
-  )
+  if (loading)
+    return (
+      <div className="absolute inset-0 flex items-center justify-center">
+        <Loading type="bars" width={40} height={40} color="green" />
+      </div>
+    )
 
   return (
     <div>
+      <Header />
       <Sidebar />
-      <div className="absolute  pt-16 right-0 top-0 bottom-0 left-sidebar bg-[#f0f2f5]">
-        <Header />
+      <div className="absolute overflow-hidden overflow-y-auto  right-0 top-16 bottom-0 left-sidebar bg-[#f0f2f5]">
         <Outlet />
       </div>
     </div>

@@ -9,6 +9,7 @@ import ClientesPage from './pages/clientes-page';
 import HomePage from './pages/home-page';
 import LoginPage from './pages/login-page';
 import RemessasPage from './pages/remessas-page';
+import RetornosPage from './pages/retornos-page';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -34,6 +35,7 @@ function App() {
               <Route path='dashboard' element={<HomePage />} />
               <Route path='boletos' element={<BoletosPage />} />
               <Route path='remessas' element={<RemessasPage />} />
+              <Route path='retornos' element={<RetornosPage />} />
               <Route path='clientes' element={<ClientesPage />} />
             </Route>
           </Routes>

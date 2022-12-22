@@ -19,6 +19,11 @@ export default function Sidebar() {
           </NavLink>
         </li>
         <li>
+          <NavLink to="/retornos">
+           <UploadSimple /> <span>Retornos</span>
+          </NavLink>
+        </li>
+        <li>
           <NavLink to="/clientes">
            <UserList /> <span>Clientes</span>
           </NavLink>

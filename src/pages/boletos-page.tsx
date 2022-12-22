@@ -89,6 +89,7 @@ export default function BoletosPage() {
               <th>Cliente</th>
               <th>Valor</th>
               <th>Vencimento</th>
+              <th>PIX</th>
               <th>Status</th>
               <th></th>
             </tr>
@@ -114,6 +115,7 @@ export default function BoletosPage() {
                 <td>{boleto.valor}</td>
                 <td>{boleto.vencimento}</td>
                 <td>{boleto.status}</td>
+                <td>{(boleto?.url_pix) ? 'SIM' : 'NÃO'}</td>
                 <td>
                   <div className="flex justify-end">
                     <a target="_blank" href={`${import.meta.env.VITE_API_URL}/boletos/print/${boleto.id}`}>

@@ -12,14 +12,12 @@ export default function LoginPage() {
   const [_, setToken] = useLocalStorage('auth_token', '')
   const navigate = useNavigate()
 
-
-
-  const { getFieldProps, handleSubmit, isSubmitting, setFieldValue } = useFormik({
+  const { getFieldProps, handleSubmit, isSubmitting, setFieldValue, values } = useFormik({
     initialValues: {
       email: '',
       password: '',
     },
-    onSubmit: async (values) => {
+    onSubmit: async () => {
       const { data } = await Api.post('auth', values)
       if ('token' in data) {
         setToken(data.token)
@@ -50,10 +48,10 @@ export default function LoginPage() {
           <input
             {...getFieldProps('email')}
             type="text"
-            className="rounded pl-10"
+            className="rounded pl-10 input"
             placeholder="E-mail"
           />
-          <span className="absolute left-3 bottom-3">
+          <span className="absolute left-3 bottom-4">
             <Envelope />
           </span>
         </div>
@@ -63,15 +61,15 @@ export default function LoginPage() {
             {...getFieldProps('password')}
             type={showPassword ? 'text' : 'password'}
             placeholder="Senha"
-            className="rounded px-10"
+            className="rounded px-10 input"
           />
-          <span className="absolute left-3 bottom-3">
+          <span className="absolute left-3 bottom-4">
             <Password />
           </span>
           <button
             onClick={() => setShowPassword(!showPassword)}
             type="button"
-            className="absolute right-3 bottom-3"
+            className="absolute right-3 bottom-4"
           >
             {showPassword ? <EyeSlash /> : <Eye />}
           </button>

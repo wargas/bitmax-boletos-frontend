@@ -41,7 +41,9 @@ export interface Retorno {
   id: number
   sequencial: number
   nome: string
+  status: string
   data_envio: any
+  progress: number
   created_at: string
   updated_at: string
 }

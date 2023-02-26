@@ -1,17 +1,27 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import PageTitle from '../components/page-title'
 import Api from '../libs/Api'
 import { DotsThreeVertical, Plus, ArrowsClockwise  } from 'phosphor-react'
 import Loading from 'react-loading'
 import { Cliente } from '../interfaces/api-interfaces'
 import PageComponent from '../components/page'
+import { useState } from 'react'
 
 export default function ClientesPage() {
-  const { data, refetch, isRefetching } = useQuery([`clientes`], async () => {
-    const { data } = await Api.get<Cliente[]>('clientes')
+  
+  const [search, setSearch] = useState('')
+
+  const client = useQueryClient()
+
+  const { data, refetch, isRefetching } = useQuery(
+    [`clientes`, search], 
+    async () => {
+    const { data } = await Api.get<Cliente[]>(`clientes?documento=${search}`)
 
     return data
-  })
+  },
+   { enabled: false }
+  )
 
   return (
     <PageComponent>
@@ -23,8 +33,18 @@ export default function ClientesPage() {
           <button className="btn btn-square btn-ghost">
             <Plus />
           </button>
-          <input type="text" className="input" placeholder="Pequisar" />
-        </div>
+          {/* <input type="text" className="input" placeholder="Pequisar" /> */}
+          <input
+            onChange={(ev) => setSearch(ev.target.value)}
+            placeholder="Documento"
+            type="text"
+            className="input"
+          />
+        
+        <button onClick={() => refetch()} className="btn btn-primary">           
+             <span className='ml-3'>Buscar</span>
+          </button>
+          </div>
       </PageTitle>
 
       <div>

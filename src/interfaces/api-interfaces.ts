@@ -40,6 +40,7 @@ export interface Remessa {
 export interface Retorno {
   id: number
   sequencial: number
+  nome: string
   data_envio: any
   created_at: string
   updated_at: string

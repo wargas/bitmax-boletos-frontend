@@ -57,6 +57,7 @@ export default function RetornosPage() {
             <tr>
               <th>Id</th>
               <th>Sequencial</th>
+              <th>Nome</th>
               <th>Data Envido</th>
               <th></th>
             </tr>
@@ -69,6 +70,9 @@ export default function RetornosPage() {
                 </td>
                 <td>
                   {retorno.sequencial}
+                </td>
+                <td>
+                  {retorno.nome}
                 </td>
                 <td>
                   {retorno.data_envio}

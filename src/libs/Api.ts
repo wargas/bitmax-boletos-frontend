@@ -9,9 +9,10 @@ Api.interceptors.request.use(config => {
     try {
         const token = JSON.parse(localStorage.getItem('auth_token') as string);
 
-        if(token) {
+        if (token) {
             config.headers = {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${token}`,
+                'Access-Control-Allow-Origin': '*'
             }
         }
 

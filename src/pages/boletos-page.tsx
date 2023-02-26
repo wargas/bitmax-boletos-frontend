@@ -48,7 +48,7 @@ export default function BoletosPage() {
     const ids = selecionados.map((s) => s.id).join(',')
 
     window.open(
-      `${import.meta.env.VITE_API_URL}/carne?ids=${ids}`,
+      `${import.meta.env.VITE_API_URL}carne?ids=${ids}`,
       'nova-janela',
     )
   }
@@ -89,8 +89,8 @@ export default function BoletosPage() {
               <th>Cliente</th>
               <th>Valor</th>
               <th>Vencimento</th>
-              <th>PIX</th>
               <th>Status</th>
+              <th>PIX</th>
               <th></th>
             </tr>
           </thead>
@@ -118,7 +118,7 @@ export default function BoletosPage() {
                 <td>{(boleto?.url_pix) ? 'SIM' : 'NÃO'}</td>
                 <td>
                   <div className="flex justify-end">
-                    <a target="_blank" href={`${import.meta.env.VITE_API_URL}/boletos/print/${boleto.id}`}>
+                    <a target="_blank" href={`${import.meta.env.VITE_API_URL}boletos/print/${boleto.id}`}>
                       <FilePdf />
                     </a>
                   </div>

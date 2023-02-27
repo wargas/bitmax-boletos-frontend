@@ -1,13 +1,15 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import PageTitle from '../components/page-title'
 import Api from '../libs/Api'
-import { DownloadSimple, DotsThreeVertical } from 'phosphor-react'
+import { DownloadSimple, DotsThreeVertical, Play } from 'phosphor-react'
 import Loading from 'react-loading'
 import { toast } from 'react-toastify'
 import { Retorno } from '../interfaces/api-interfaces'
 import PageComponent from '../components/page'
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react'
+import { DateTime } from 'luxon'
 import { PusherClient } from '../libs/PusherClient'
+import { useSubscribe } from '../providers/pusher'
 
 export default function RetornosPage() {
   const fileRef = useRef<HTMLInputElement>(null)
@@ -46,25 +48,37 @@ export default function RetornosPage() {
     [queryRetornos.data],
   )
 
-  useEffect(() => {
-    const sub = PusherClient.subscribe('retorno').bind(
-      'updated-status',
-      function (data: string) {
-        const newRetorno = JSON.parse(data) as Retorno
-        replaceItem(newRetorno)
-        console.log(newRetorno.progress)
-      },
-    )
-
-    return () => {
-      sub.unbind()
+  function reprocessar(id: number) {
+    try {
+      const data = Api.post(`retornos/${id}/reprocessar`)
+      toast.success('Arquivo enviado para reprocessamento')
+    } catch (error) {
+      toast.error('Falha ao enviar para reprocessamento')
     }
-  }, [queryRetornos.data])
+  }
+
+  useSubscribe<string>(
+    'retorno',
+    'updated-status',
+    (data) => {
+      const newRetorno = JSON.parse(data) as Retorno
+      replaceItem(newRetorno)
+    },
+    [queryRetornos.data],
+  )
+
+  useSubscribe('teste', 'teste', console.log, [])
 
   return (
     <PageComponent>
       <PageTitle title="Retornos">
         <div className="flex items-center">
+          <button
+            onClick={() => queryRetornos.refetch()}
+            className="btn btn-ghost"
+          >
+            Atualizar
+          </button>
           <button
             onClick={() => fileRef.current?.click()}
             className="btn btn-ghost"
@@ -86,31 +100,62 @@ export default function RetornosPage() {
               <th>Id</th>
               <th>Sequencial</th>
               <th>Nome</th>
-              <th>Data Envido</th>
+              <th>Data Enviado</th>
               <th>Status</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
             {queryRetornos.data?.map((retorno) => (
-              <tr key={retorno.id} className="">
-                <td>{retorno.id}</td>
-                <td>{retorno.sequencial}</td>
-                <td>{retorno.nome}</td>
-                <td>{retorno.data_envio}</td>
-                <td>
-                  {retorno.status === 'PENDENTE' && <span></span>}
-                  {retorno.status === 'PROCESSANDO' && (
-                    <span className="text-warning">
-                      Processando ({(retorno.progress*100).toFixed(1)}%)
-                    </span>
-                  )}
-                  {retorno.status === 'CONCLUIDO' && (
-                    <span className="text-success">Concluído</span>
-                  )}
-                </td>
-                <td></td>
-              </tr>
+              <>
+                <tr key={retorno.id} className="">
+                  <td>{retorno.id}</td>
+                  <td>{retorno.sequencial}</td>
+                  <td>{retorno.nome}</td>
+                  <td>
+                    {DateTime.fromSQL(retorno.data_envio).toFormat(
+                      'dd/MM/y HH:mm:ss',
+                    )}
+                  </td>
+                  <td>
+                    {retorno.status === 'PENDENTE' && (
+                      <span className="badge">PENDENTE</span>
+                    )}
+                    {retorno.status === 'PROCESSANDO' && (
+                      <span className="badge-warning badge">
+                        ({(retorno.progress * 100).toFixed(0)}%)
+                      </span>
+                    )}
+                    {retorno.status === 'CONCLUIDO' && (
+                      <span className="badge-success text-white badge">
+                        Concluído
+                      </span>
+                    )}
+                  </td>
+                  <td>
+                    <div className="flex justify-end">
+                      {['PENDENTE', 'FALHA'].includes(retorno.status) && (
+                        <button
+                          onClick={() => reprocessar(retorno.id)}
+                          title="reprocessar"
+                          className="btn btn-xs btn-circle btn-ghost flex"
+                        >
+                          <Play />
+                        </button>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+                {retorno.status === 'PROCESSANDO' && (
+                  <tr>
+                    <td style={{padding: 0}}  colSpan={6}>
+                      <div className='flex'>
+                        <div style={{width: retorno.progress * 100+'%', height: 1}} className='bg-green-500 transition-all'></div>
+                      </div>
+                    </td>
+                  </tr>
+                )}
+              </>
             ))}
           </tbody>
         </table>

@@ -33,6 +33,11 @@ export default function Sidebar() {
            <Barcode /> <span>Boletos</span>
           </NavLink>
         </li>
+        <li>
+          <NavLink to="/faturas">
+           <Barcode /> <span>Faturas</span>
+          </NavLink>
+        </li>
       </ul>
     </div>
   )

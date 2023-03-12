@@ -16,6 +16,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import Modals from './components/modals'
 import { useEffect, useMemo, useState } from 'react'
 import { PusherProvider } from './providers/pusher'
+import FaturasPage from './pages/faturas-page'
 // import { PusherClient } from './libs/PusherClient'
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
               <Route path="" element={<Navigate to="dashboard" />} />
               <Route path="dashboard" element={<HomePage />} />
               <Route path="boletos" element={<BoletosPage />} />
+              <Route path="faturas" element={<FaturasPage />} />
               <Route path="remessas" element={<RemessasPage />} />
               <Route path="retornos" element={<RetornosPage />} />
               <Route path="clientes" element={<ClientesPage />} />
